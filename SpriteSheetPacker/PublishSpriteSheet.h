@@ -35,6 +35,7 @@ public:
     void setJpgQuality(int quality) { _jpgQuality = quality; }
     void setTrimSpriteNames(bool trimSpriteNames) { _trimSpriteNames = trimSpriteNames; }
     void setPrependSmartFolderName(bool prependSmartFolderName) { _prependSmartFolderName = prependSmartFolderName; }
+    void setExportTwoScalePlistName(bool exportTwoScalePlist) { _exportTwoScalePlist = exportTwoScalePlist; }
     void setEncryptionKey(const QString& key) { _encryptionKey = key; }
 
     bool publish(const QString& format, bool errorMessage = true);
@@ -46,7 +47,7 @@ signals:
     void onCompletedOptimizePNG();
 
 protected:
-    bool generateDataFile(const QString& filePath, const QString& format, const QMap<QString, SpriteFrameInfo>& spriteFrames, const QImage& atlasImage, bool errorMessage = true);
+    bool generateDataFile(const QString& filePath, const QString& format, const QMap<QString, SpriteFrameInfo>& spriteFrames, const QImage& atlasImage, bool errorMessage = true, bool exportTwoScalePlist = false);
     bool optimizePNG(const QString& fileName, const QString& optMode, int optLevel);
     void optimizePNGInThread(QStringList fileNames, const QString& optMode, int optLevel);
 
@@ -71,6 +72,7 @@ protected:
 
     bool        _trimSpriteNames;
     bool        _prependSmartFolderName;
+    bool        _exportTwoScalePlist;
 
     QString     _encryptionKey;
 

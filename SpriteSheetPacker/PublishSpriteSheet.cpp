@@ -156,6 +156,7 @@ PublishSpriteSheet::PublishSpriteSheet() {
 
     _trimSpriteNames = true;
     _prependSmartFolderName = true;
+    _exportTwoScalePlist = false;
 }
 
 void PublishSpriteSheet::addSpriteSheet(const SpriteAtlas &atlas, const QString &fileName) {
@@ -191,6 +192,9 @@ bool PublishSpriteSheet::publish(const QString& format, bool errorMessage) {
 
             // generate the data file and the image
             if (!format.isEmpty() && !generateDataFile(outputFilePath, format, outputData._spriteFrames, outputData._atlasImage, errorMessage)) {
+                return false;
+            }
+            if (_exportTwoScalePlist && !format.isEmpty() && !generateDataFile(outputFilePath, format, outputData._spriteFrames, outputData._atlasImage, errorMessage, true)) {
                 return false;
             }
 
@@ -327,7 +331,7 @@ bool PublishSpriteSheet::publish(const QString& format, bool errorMessage) {
     return true;
 }
 
-bool PublishSpriteSheet::generateDataFile(const QString& filePath, const QString& format,  const QMap<QString, SpriteFrameInfo>& spriteFrames, const QImage& atlasImage, bool errorMessage) {
+bool PublishSpriteSheet::generateDataFile(const QString& filePath, const QString& format,  const QMap<QString, SpriteFrameInfo>& spriteFrames, const QImage& atlasImage, bool errorMessage, bool exportTwoScalePlist) {
     QJSEngine engine;
 
     auto it_format = _formats.find(format);
@@ -387,6 +391,13 @@ bool PublishSpriteSheet::generateDataFile(const QString& filePath, const QString
             spriteFrameValue.setProperty("sourceColorRect", jsValue(engine, it_f.value().sourceColorRect));
             spriteFrameValue.setProperty("sourceSize", jsValue(engine, it_f.value().sourceSize));
             spriteFrameValue.setProperty("triangles", jsValue(engine, it_f.value().triangles));
+            if (exportTwoScalePlist) {
+                QRect frame(it_f.value().frame.left() * 2, it_f.value().frame.top() * 2, it_f.value().frame.width() * 2, it_f.value().frame.height() * 2);
+                spriteFrameValue.setProperty("frame", jsValue(engine, frame));
+                spriteFrameValue.setProperty("offset", jsValue(engine, it_f.value().offset * 2));
+                spriteFrameValue.setProperty("sourceSize", jsValue(engine, it_f.value().sourceSize * 2));
+            }
+
 
             QString name = it_f.key();
             // remove root folder if needed
@@ -397,7 +408,9 @@ bool PublishSpriteSheet::generateDataFile(const QString& filePath, const QString
                 }
             }            
             if (_trimSpriteNames) {
-                name = QDir::fromNativeSeparators(QFileInfo(name).path() + QDir::separator() + QFileInfo(name).baseName());
+//modif dred
+//                name = QDir::fromNativeSeparators(QFileInfo(name).path() + QDir::separator() + QFileInfo(name).baseName());
+                name = QDir::fromNativeSeparators(QFileInfo(name).baseName());
             }
             spriteFramesValue.setProperty(name, spriteFrameValue);
         }
@@ -425,6 +438,9 @@ bool PublishSpriteSheet::generateDataFile(const QString& filePath, const QString
                 QJSValue data = result.property("data");
                 QString format = result.property("format").toString();
                 QFile file(filePath + "." + format);
+                if (exportTwoScalePlist) {
+                    file.setFileName(filePath + "_x2." + format);
+                }
                 file.open(QIODevice::WriteOnly | QIODevice::Text);
                 QTextStream out(&file);
                 if (format == "plist") {

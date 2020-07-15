@@ -94,6 +94,7 @@ Lossy - Uses pngquant to optimize the filesize. The reduction is mostly about 70
     int pngOptLevel = 0;
     bool trimSpriteNames = false;
     bool prependSmartFolderName = false;
+    bool exportTwoScalePlistName = false;
 
     if (projectFile) {
         if (!projectFile->read(source.filePath())) {
@@ -109,6 +110,7 @@ Lossy - Uses pngquant to optimize the filesize. The reduction is mostly about 70
             pngOptLevel = projectFile->pngOptLevel();
             trimSpriteNames = projectFile->trimSpriteNames();
             prependSmartFolderName = projectFile->prependSmartFolderName();
+            exportTwoScalePlistName = projectFile->exportTwoScalePlistName();
 
             if (!destinationSet) {
                 destination.setFile(projectFile->destPath());
@@ -267,6 +269,7 @@ Lossy - Uses pngquant to optimize the filesize. The reduction is mostly about 70
 
     publisher.setTrimSpriteNames(trimSpriteNames);
     publisher.setPrependSmartFolderName(prependSmartFolderName);
+    publisher.setExportTwoScalePlistName(exportTwoScalePlistName);
     publisher.setPngQuality(pngOptMode, pngOptLevel);
 
     if (!publisher.publish(format, false)) {

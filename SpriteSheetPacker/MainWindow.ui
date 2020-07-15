@@ -307,7 +307,7 @@
           <x>0</x>
           <y>0</y>
           <width>314</width>
-          <height>909</height>
+          <height>924</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -507,6 +507,9 @@
                    </property>
                    <property name="text">
                     <string>Rotate sprites:</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -734,7 +737,7 @@
             <item>
              <widget class="QTabWidget" name="imageFormatSettingsTabWidget">
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="png">
                <attribute name="title">
@@ -1123,6 +1126,9 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="spritesDockWidget">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="minimumSize">
     <size>
      <width>300</width>
@@ -1160,7 +1166,17 @@
       </widget>
      </item>
      <item>
+      <widget class="QCheckBox" name="exportTwoScalePlist">
+       <property name="text">
+        <string>Export TwoScale Plist</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QCheckBox" name="prependSmartFolderNameCheckBox">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
        <property name="toolTip">
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:18pt; font-weight:600;&quot;&gt;Prepend smart folder name&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Prepends the smart folder's name as part of the sprite name.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
@@ -1168,7 +1184,7 @@
         <string>Prepend smart folder name</string>
        </property>
        <property name="checked">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
       </widget>
      </item>

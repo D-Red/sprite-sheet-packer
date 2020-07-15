@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>229</width>
-    <height>195</height>
+    <height>203</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -185,6 +185,9 @@
       <widget class="QCheckBox" name="forceSquaredCheckBox">
        <property name="text">
         <string>Force squared</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
        </property>
       </widget>
      </item>

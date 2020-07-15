@@ -85,6 +85,9 @@ public:
     void setPrependSmartFolderName(bool prependSmartFolderName) { _prependSmartFolderName = prependSmartFolderName; }
     bool prependSmartFolderName() const { return _prependSmartFolderName; }
 
+    void setExportTwoScalePlistName(bool exportTwoScalePlist) { _exportTwoScalePlist = exportTwoScalePlist; }
+    bool exportTwoScalePlistName() const { return _exportTwoScalePlist; }
+
     void setEncryptionKey(const QString& key) { _encryptionKey = key; }
     const QString& encryptionKey() { return _encryptionKey; }
 
@@ -122,6 +125,7 @@ protected:
 
     bool        _trimSpriteNames;
     bool        _prependSmartFolderName;
+    bool        _exportTwoScalePlist;
     QString     _encryptionKey;
 
 private:

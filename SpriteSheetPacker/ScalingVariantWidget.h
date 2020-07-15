@@ -12,7 +12,7 @@ class ScalingVariantWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit ScalingVariantWidget(QWidget *parent = 0, const QString& name = "", float scale = 1, int maxTextureSize = 2048, bool pow2 = false, bool forceSquared = false);
+    explicit ScalingVariantWidget(QWidget *parent = 0, const QString& name = "", float scale = 1, int maxTextureSize = 2048, bool pow2 = false, bool forceSquared = true);
     ~ScalingVariantWidget();
 
     void setRemoveEnabled(bool enable);

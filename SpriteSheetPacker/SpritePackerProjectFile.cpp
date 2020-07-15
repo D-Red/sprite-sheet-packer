@@ -86,6 +86,7 @@ bool SpritePackerProjectFile::read(const QString &fileName) {
 
     if (json.contains("trimSpriteNames")) _trimSpriteNames = json["trimSpriteNames"].toBool();
     if (json.contains("prependSmartFolderName")) _prependSmartFolderName = json["prependSmartFolderName"].toBool();
+    if (json.contains("exportTwoScalePlist")) _exportTwoScalePlist = json["exportTwoScalePlist"].toBool();
 
     if (json.contains("encryptionKey")) _encryptionKey = json["encryptionKey"].toString();
 
@@ -133,6 +134,7 @@ bool SpritePackerProjectFile::write(const QString &fileName) {
     json["srcList"] = QJsonArray::fromStringList(srcRelative);
     json["trimSpriteNames"] = _trimSpriteNames;
     json["prependSmartFolderName"] = _prependSmartFolderName;
+    json["exportTwoScalePlist"] = _exportTwoScalePlist;
     json["encryptionKey"] = _encryptionKey;
 
     QFile file(fileName);
@@ -166,6 +168,10 @@ bool SpritePackerProjectFileTPS::read(const QString &fileName) {
 
     if (tpsMap.find("prependSmartFolderName") != tpsMap.end()) {
         _prependSmartFolderName = tpsMap["prependSmartFolderName"].toBool();
+    }
+
+    if (tpsMap.find("exportTwoScalePlist") != tpsMap.end()) {
+        _exportTwoScalePlist = tpsMap["exportTwoScalePlist"].toBool();
     }
 
     if (tpsMap.find("heuristicMask") != tpsMap.end()) {

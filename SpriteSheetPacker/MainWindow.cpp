@@ -358,6 +358,7 @@ void MainWindow::openSpritePackerProject(const QString& fileName) {
 
     ui->trimSpriteNamesCheckBox->setChecked(projectFile->trimSpriteNames());
     ui->prependSmartFolderNameCheckBox->setChecked(projectFile->prependSmartFolderName());
+    ui->exportTwoScalePlist->setChecked(projectFile->exportTwoScalePlistName());
 
     _encryptionKey = projectFile->encryptionKey();
     ui->contentProtectionToolButton->setChecked(!_encryptionKey.isEmpty());
@@ -433,6 +434,7 @@ void MainWindow::saveSpritePackerProject(const QString& fileName) {
     projectFile->setJpgQuality(ui->jpgQualitySlider->value());
     projectFile->setTrimSpriteNames(ui->trimSpriteNamesCheckBox->isChecked());
     projectFile->setPrependSmartFolderName(ui->prependSmartFolderNameCheckBox->isChecked());
+    projectFile->setExportTwoScalePlistName(ui->exportTwoScalePlist->isChecked());
     projectFile->setEncryptionKey(_encryptionKey);
 
     QVector<ScalingVariant> scalingVariants;
@@ -654,6 +656,7 @@ void MainWindow::on_actionPublish_triggered() {
     publisher->setJpgQuality(ui->jpgQualitySlider->value());
     publisher->setTrimSpriteNames(ui->trimSpriteNamesCheckBox->isChecked());
     publisher->setPrependSmartFolderName(ui->prependSmartFolderNameCheckBox->isChecked());
+    publisher->setExportTwoScalePlistName(ui->exportTwoScalePlist->isChecked());
     publisher->setEncryptionKey(_encryptionKey);
 
     PublishStatusDialog publishStatusDialog(this);
@@ -848,7 +851,7 @@ void MainWindow::on_addScalingVariantPushButton_clicked() {
         return;
     }
 
-    ScalingVariantWidget* scalingVariantWidget = new ScalingVariantWidget(this, defaultScaling[index].first.c_str(), defaultScaling[index].second);
+    ScalingVariantWidget* scalingVariantWidget = new ScalingVariantWidget(this, "", defaultScaling[index].second);
     connect(scalingVariantWidget, SIGNAL(remove()), this, SLOT(onRemoveScalingVariant()));
     connect(scalingVariantWidget, SIGNAL(valueChanged(bool)), this, SLOT(onScalingVariantWidgetValueChanged(bool)));
     ui->scalingVariantsGroupBox->layout()->addWidget(scalingVariantWidget);
